@@ -479,7 +479,7 @@ section{
     margin: 1rem 0.5rem;
     word-break: keep-all;
 }
-
+/* 
 code{
     display: block;
     background: gray;
@@ -496,6 +496,7 @@ blockquote{
     border-left: 0.25em solid gray;
     margin: 0.5rem 0;
 }
+ */
 
 #projectModal .modal-body img{
     max-width: 100%;
