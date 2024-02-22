@@ -6,17 +6,17 @@ LLaMA-Factory-Colab,img/LLaMA-Factory-Colab.png,data/description/LLaMA-Factory-C
 原流購物網站,img/llyungshop.png,data/description/llyungshop.html,,https://llyungshop.kaoku.tw/,PHP、MySQL、HTML、CSS、JavaScript、jQuery,2022.5.20 ~ 2022.12.31,原民會/中興大學,,,1,1,
 台中教大113級數位系畢展網站,img/數位系113畢展網站/DCT113.png,data/description/DCT113.html,,https://dctge.ntcu.edu.tw/113/,Vue、Vuex、HTML、CSS、JavaScript、Bootstrap,2022.10.01 ~ 2023.4.29,台中教大113級數位系畢籌會,,,1,1,
 WhisperGUI,img/WhisperGUI.png,data/description/WhisperGUI.html,https://github.com/ADT109119/WhisperGUI,,Python、Tkinter,2023.1.27~2023.1.28,Side Project,1,,,,1
-輕鬆記帳,img/jijun.png,data/description/jijun.html,https://github.com/ADT109119/jijun,https://jijun.tk,HTML、CSS、JavaScript、PWA,2021.12.16~2022.7.19,Side Project,1,,,1,
+輕鬆記帳,img/jijun.png,data/description/jijun.html,https://github.com/ADT109119/jijun,https://jijun.the-walking-fish.com/,HTML、CSS、JavaScript、PWA,2021.12.16~2022.7.19,Side Project,1,,,1,
 聊天機器人API,img/聊天機器人API/封面.png,data/description/聊天機器人API.html,,https://www.youtube.com/embed/G1Xbn1Whxhc,PHP、MySQL、HTML、CSS、JavaScript、Python、Keras、Flask,2022.May ~ 2022.June,臺中教育大學 資工系 課程 – 資料庫程式設計,,1,,1,1
-左傳地理資訊系統,img/ZuoChuan.png,data/description/ZuoChuan.html,https://github.com/ADT109119/ZuoChuan,https://adt109119.github.io/ZuoChuan/,HTML、CSS、JavaScript、Bootstrap、Web Worker,2022.10.24 ~ 2022.12.16,"臺中教育大學 通識課程 - 經典的智慧 ",,1,,1,
+左傳地理資訊系統,img/ZuoChuan.png,data/description/ZuoChuan.html,https://github.com/ADT109119/ZuoChuan,https://adt109119.github.io/ZuoChuan/,HTML、CSS、JavaScript、Bootstrap、Web Worker,2022.10.24 ~ 2022.12.16,臺中教育大學 通識課程 - 經典的智慧 ,,1,,1,
 優質的音樂APP,img/優質的音樂APP.png,data/description/優質的音樂APP.html,,,Python、MySQL、HTML、CSS、JavaScript、Bootstrap、PWA,2022.12.19 ~ 2022.12.26,臺中教育大學 數位系 課程 – 資料庫管理,,1,,1,1
-AI圖片放大網站,"img/AI圖片放大網站/封面.png ",data/description/AI_ISR.html,,,HTML、CSS、JavaScript、Bootstrap、Python、Flask、Keras,2022.10.26 ~ 2023.1.4,臺中教育大學 數位系 課程 – 人工智慧應用,,1,,1,1
+AI圖片放大網站,img/AI圖片放大網站/封面.png ,data/description/AI_ISR.html,,,HTML、CSS、JavaScript、Bootstrap、Python、Flask、Keras,2022.10.26 ~ 2023.1.4,臺中教育大學 數位系 課程 – 人工智慧應用,,1,,1,1
 文字情緒AI模型應用於教學評鑑分析,img/AI_Emotion_Classification.png,data/description/AI文字情緒分析.html,,,Python、Keras,2023.January,吳智鴻教授,,,1,,1
 國資圖展覽 – 谷關七雄 雄讚!,img/techArt.png,data/description/techArt.html,https://github.com/ADT109119/techArt,https://adt109119.github.io/techArt/,AR.js、JavaScript、Blender、3ds max,2022.9.22 ~ 2023.1.5,臺中教育大學 數位系 課程 – 科技藝術,,1,,1,
 貨幣匯率LineBot,img/LineBot.png,,,https://line.me/R/ti/p/@360rfzhl,Google App Script,2019.July,Side Project,1,,,,
 YouTube留言轉圖片,img/YtComment2Pic.png,,,,HTML、CSS、JavaScript、Html2Canvas,2021.July,Side Project,1,,,1,
 數位系系學會新生入學資料生成器GUI,img/數位系系學會新生入學資料生成器GUI.png,,,,Python、Tkinter,2023.March.21,Side Project,1,,,,1
 輕鬆記帳,img/jijun.png,data/description/jijun.html,,https://jijun.tk,HTML、CSS、JavaScript、PWA,2021.12.16~2022.7.19,Side Project,1,,,1,
-心血管疾病檢測網站,img/心血管疾病檢測網站.png,data/description/心血管疾病檢測網站.html,,,PHP、MySQL、HTML、CSS、JavaScript、Bootstrap,"2022.May ~ 2022.June ",臺中教育大學 數位系 課程 – 網頁程式設計,,1,,1,
+心血管疾病檢測網站,img/心血管疾病檢測網站.png,data/description/心血管疾病檢測網站.html,,,PHP、MySQL、HTML、CSS、JavaScript、Bootstrap,2022.May ~ 2022.June ,臺中教育大學 數位系 課程 – 網頁程式設計,,1,,1,
 數位猴砍水果,img/期中專題_數位猴砍水果/封面.png,data/description/數位猴砍水果.html,,https://itechdct.ntcu.edu.tw/ntcudct_courses/DigitalCommunication/resource/06_web/10921_web/ADT109119_%E9%A1%8F%E7%BE%A4%E5%AD%B8/%E6%9C%9F%E4%B8%AD%E5%B0%88%E9%A1%8C/20_%E6%9C%9F%E4%B8%AD%E5%B0%88%E9%A1%8C/%E7%B6%B2%E9%A0%81%E6%AA%94/index.html,HTML、CSS、JavaScript,20221.March,臺中教育大學 數位系 課程 – 數位整合傳播,,1,,1,
 影片自動上字幕,img/影片自動上字幕/影片自動上字幕.png,,,,HTML、CSS、JavaScript、Python、Flask,2021.July,Side Project,1,,,1,1
