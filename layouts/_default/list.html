@@ -1,0 +1,174 @@
+{{ define "main" }}
+<div class="pt-32 pb-20 px-6 md:px-20 min-h-screen bg-[#0a0a0a] relative z-10 overflow-hidden">
+    <div class="bg-grid fixed inset-0 z-0"></div>
+
+    <!-- Decorative Shapes -->
+    <div class="parallax-shape top-20 right-20 w-32 h-32 border border-[#7000ff] rounded-full opacity-20"
+        data-speed="-2"></div>
+    <div class="parallax-shape bottom-40 left-10 text-[#caff33] text-6xl opacity-20" data-speed="1">+</div>
+
+    <div class="max-w-6xl mx-auto relative z-10">
+        <h1 class="text-5xl md:text-7xl font-black tracking-tighter mb-10 overflow-hidden">
+            <span class="reveal-text inline-block transform translate-y-full">
+                {{ .Title }}<span class="text-[#caff33]">.</span>
+            </span>
+        </h1>
+
+        <!-- Search & Filter Section -->
+        <div class="mb-16 reveal-fade opacity-0">
+            <div class="flex flex-col gap-6 items-start md:items-center justify-between mb-8">
+                <!-- Search Bar -->
+                <div class="relative w-full md:w-96 group">
+                    <input type="text" id="searchInput" placeholder="Search projects..."
+                        class="w-full bg-[#1a1a1a] border border-gray-800 rounded-full py-3 px-6 pl-12 text-white focus:outline-none focus:border-[#caff33] transition-colors">
+                    <svg class="w-5 h-5 text-gray-500 absolute left-4 top-1/2 transform -translate-y-1/2 group-focus-within:text-[#caff33] transition-colors"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
+
+                <!-- Tag Cloud (Dynamic) -->
+                <div class="flex flex-wrap gap-2" id="tagContainer">
+                    <button
+                        class="filter-tag active px-4 py-1 rounded-full border border-[#caff33] bg-[#caff33] text-black text-sm font-bold transition-all hover:scale-105"
+                        data-tag="all">ALL</button>
+                    {{ $tags := slice }}
+                    {{ range .Pages }}
+                    {{ range .Params.tags }}
+                    {{ $tags = $tags | append . }}
+                    {{ end }}
+                    {{ end }}
+                    {{ range ($tags | uniq) }}
+                    <button
+                        class="filter-tag px-4 py-1 rounded-full border border-gray-700 text-gray-400 text-sm transition-all hover:border-[#caff33] hover:text-[#caff33]"
+                        data-tag="{{ . }}">{{ . }}</button>
+                    {{ end }}
+                </div>
+            </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-10" id="projectGrid">
+            {{ range .Pages }}
+            <a href="{{ .Permalink }}" class="group block interactive project-item opacity-0 translate-y-10"
+                data-cursor="view" data-title="{{ .Title | lower }}"
+                data-tags="{{ if .Params.tags }}{{ delimit .Params.tags "," }}{{ else }}{{ end }}">
+                <div
+                    class="aspect-video bg-[#1a1a1a] overflow-hidden relative mb-4 border border-gray-800 group-hover:border-[#caff33] transition-colors">
+                    {{ if .Params.image }}
+                    {{ $projectImage := .Resources.GetMatch .Params.image }}
+                    <img src="{{ if $projectImage }}{{ $projectImage.RelPermalink }}{{ else }}{{ .Params.image }}{{ end }}" alt="{{ .Title }}"
+                        class="w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                    {{ else }}
+                    <div class="w-full h-full flex items-center justify-center text-gray-500">No Image</div>
+                    {{ end }}
+                </div>
+                <h2 class="text-2xl font-bold mb-2 group-hover:text-[#caff33] transition-colors">{{ .Title }}</h2>
+                <p class="text-gray-400 text-sm line-clamp-2">{{ .Description }}</p>
+                <div class="mt-3 flex flex-wrap gap-2">
+                    {{ if .Params.tags }}
+                    {{ range .Params.tags }}
+                    <span class="text-xs font-mono text-gray-500 border border-gray-800 px-2 py-0.5 rounded">{{ .
+                        }}</span>
+                    {{ end }}
+                    {{ end }}
+                </div>
+            </a>
+            {{ end }}
+        </div>
+
+        <!-- No Results Message -->
+        <div id="noResults" class="hidden text-center py-20 text-gray-500 font-mono">
+            NO PROJECTS FOUND MATCHING YOUR CRITERIA.
+        </div>
+    </div>
+</div>
+{{ end }}
+
+{{ define "scripts" }}
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Animations
+        const tl = gsap.timeline();
+
+        tl.to('.reveal-text', {
+            y: '0%',
+            duration: 1.2,
+            ease: "power3.out"
+        })
+            .to('.reveal-fade', {
+                opacity: 1,
+                duration: 0.8,
+                ease: "power2.out"
+            }, "-=0.8");
+
+        // Grid Items Stagger
+        gsap.to('.project-item', {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "power2.out",
+            delay: 0.3
+        });
+
+        // --- Filter Logic ---
+        const searchInput = document.getElementById('searchInput');
+        const filterTags = document.querySelectorAll('.filter-tag');
+        const projectItems = document.querySelectorAll('.project-item');
+        const noResults = document.getElementById('noResults');
+        let activeTag = 'all';
+
+        function filterProjects() {
+            const searchTerm = searchInput.value.toLowerCase();
+            let visibleCount = 0;
+
+            projectItems.forEach(item => {
+                const title = item.getAttribute('data-title');
+                const tags = item.getAttribute('data-tags').split(',').map(tag => tag.trim());
+
+                const matchesSearch = title.includes(searchTerm);
+                const matchesTag = activeTag === 'all' || tags.includes(activeTag);
+
+                if (matchesSearch && matchesTag) {
+                    item.style.display = 'block';
+                    // Re-trigger animation for visible items if needed, or just let them be
+                    gsap.to(item, { opacity: 1, y: 0, duration: 0.4, overwrite: true });
+                    visibleCount++;
+                } else {
+                    gsap.to(item, {
+                        opacity: 0, y: 10, duration: 0.3, onComplete: () => {
+                            if (!matchesSearch || !matchesTag) item.style.display = 'none';
+                        }
+                    });
+                }
+            });
+
+            if (visibleCount === 0) {
+                noResults.classList.remove('hidden');
+            } else {
+                noResults.classList.add('hidden');
+            }
+        }
+
+        searchInput.addEventListener('input', filterProjects);
+
+        filterTags.forEach(tag => {
+            tag.addEventListener('click', () => {
+                // Remove active class from all
+                filterTags.forEach(t => {
+                    t.classList.remove('active', 'bg-[#caff33]', 'text-black', 'border-[#caff33]', 'font-bold');
+                    t.classList.add('text-gray-400', 'border-gray-700');
+                });
+
+                // Add active class to clicked
+                tag.classList.add('active', 'bg-[#caff33]', 'text-black', 'border-[#caff33]', 'font-bold');
+                tag.classList.remove('text-gray-400', 'border-gray-700');
+
+                activeTag = tag.getAttribute('data-tag');
+                filterProjects();
+            });
+        });
+    });
+</script>
+{{ end }}

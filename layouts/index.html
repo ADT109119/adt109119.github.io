@@ -1,0 +1,338 @@
+{{ define "main" }}
+<!-- Hero: 個人簡介 -->
+<section class="relative h-screen flex flex-col justify-center px-6 md:px-20 overflow-hidden">
+    <div class="bg-grid"></div>
+    <div
+        class="absolute top-1/4 right-[-10%] w-[40vw] h-[40vw] bg-[#7000ff] rounded-full blur-[120px] opacity-20 animate-pulse z-0">
+    </div>
+
+    <div class="parallax-shape top-32 left-20 text-gray-700 text-4xl" data-speed="2">+</div>
+    <div class="parallax-shape top-1/2 right-32 w-20 h-20 border border-gray-700 rounded-full" data-speed="-3"></div>
+    <div class="parallax-shape bottom-40 left-1/4 w-4 h-4 bg-[#caff33]" data-speed="1"></div>
+    <div class="parallax-shape top-40 right-1/4 w-32 h-[1px] bg-gray-700 rotate-45" data-speed="4"></div>
+
+    <div class="z-10 mt-20 relative">
+        <p class="text-[#caff33] font-mono mb-4 reveal-fade" data-cursor="text">/// HELLO, I AM {{ .Site.Params.author |
+            default "JerryYen" }}</p>
+        <h1 class="text-[13vw] leading-[0.85] font-black tracking-tighter">
+            <div class="overflow-hidden"><span
+                    class="reveal-text inline-block transform translate-y-full">BACK-END</span></div>
+
+            <div class="overflow-hidden">
+                <span class="reveal-text inline-block transform translate-y-full text-fill-anim interactive"
+                    data-cursor="magnet">ENGINEER</span>
+            </div>
+
+            <div class="overflow-hidden flex items-center gap-4 md:gap-10">
+                <span class="reveal-text inline-block transform translate-y-full">&</span>
+                <span
+                    class="reveal-text inline-block transform translate-y-full text-2xl md:text-4xl font-light tracking-normal max-w-md leading-tight text-gray-400">
+                    一位熱衷於 AI 應用與網頁開發的後端工程師。
+                </span>
+            </div>
+        </h1>
+    </div>
+
+    <!-- Tech Card -->
+    <div class="hidden md:block tech-card interactive" data-cursor="magnet">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-6 border-b border-gray-700 pb-4">
+            <span class="text-[10px] font-mono tracking-widest text-gray-400">NETWORK UPLINK</span>
+            <span class="text-[10px] font-mono font-bold text-[#caff33] bg-[#caff33]/10 px-2 py-1 rounded">ONLINE</span>
+        </div>
+
+        <!-- Info Rows -->
+        <div class="space-y-5 font-mono text-xs">
+            <!-- GitHub -->
+            <a href="https://github.com/{{ .Site.Params.github }}" target="_blank"
+                class="flex items-center justify-between group cursor-pointer" data-cursor="magnet">
+                <div class="flex items-center gap-2 text-gray-500 group-hover:text-white transition-colors">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                            d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <span>GITHUB</span>
+                </div>
+                <span class="text-[#caff33] border-b border-transparent group-hover:border-[#caff33] transition-all">{{
+                    .Site.Params.github }} ↗</span>
+            </a>
+
+            <!-- YouTube -->
+            <a href="https://www.youtube.com/{{ .Site.Params.youtube }}" target="_blank"
+                class="flex items-center justify-between group cursor-pointer" data-cursor="magnet">
+                <div class="flex items-center gap-2 text-gray-500 group-hover:text-white transition-colors">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                            d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                    </svg>
+                    <span>YOUTUBE</span>
+                </div>
+                <span
+                    class="text-[#caff33] border-b border-transparent group-hover:border-[#caff33] transition-all">{{
+                    .Site.Params.youtubeName }}
+                    ↗</span>
+            </a>
+
+            <!-- Local Time -->
+            <div class="flex items-center justify-between pt-2 border-t border-gray-800">
+                <span class="text-gray-500">LOCAL TIME</span>
+                <span id="clock" class="text-gray-300 tabular-nums">00:00:00</span>
+            </div>
+        </div>
+
+        <!-- Footer / Status -->
+        <div class="mt-8 pt-5 border-t border-gray-700 relative">
+            <span class="text-[10px] text-gray-500 block mb-2 uppercase tracking-wider">Current Status</span>
+            <div class="flex items-center gap-2">
+                <span class="status-dot"></span>
+                <div class="text-sm font-bold text-white leading-snug group-hover:text-[#caff33] transition-colors">
+                    Coding & Creating
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="absolute bottom-10 left-6 md:left-20 flex items-end gap-4 text-sm text-gray-500 font-mono z-10">
+        <div class="animate-bounce">↓</div>
+        <div>BASED IN TAIWAN<br>AVAILABLE FOR FREELANCE</div>
+    </div>
+</section>
+
+<!-- Marquee Section (無縫版本) -->
+<div class="py-12 bg-[#caff33] text-black overflow-hidden z-20 relative border-y-4 border-black rotate-[-1deg] scale-105 origin-center shadow-lg"
+    data-cursor="text">
+    <div class="marquee-track">
+        <div class="marquee-item text-6xl md:text-8xl font-black tracking-tighter uppercase">
+            BACK-END DEV — AI APPLICATION — FULL STACK — SYSTEM DESIGN —
+        </div>
+        <div class="marquee-item text-6xl md:text-8xl font-black tracking-tighter uppercase">
+            BACK-END DEV — AI APPLICATION — FULL STACK — SYSTEM DESIGN —
+        </div>
+    </div>
+</div>
+
+<!-- 履歷區塊 -->
+<section id="about" class="py-32 px-6 md:px-20 bg-[#0a0a0a] relative z-10 overflow-hidden">
+    <div class="blob-gradient w-96 h-96 bg-blue-900 top-0 left-[-100px] mix-blend-screen"></div>
+    <div class="blob-gradient w-64 h-64 bg-purple-900 bottom-0 right-[-50px] mix-blend-screen"
+        style="animation-delay: -5s;"></div>
+
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-10 relative z-10">
+        <div class="md:col-span-4">
+            <h2 class="text-4xl md:text-6xl font-bold sticky top-20">About<span class="text-[#caff33]">.</span></h2>
+        </div>
+        <div class="md:col-span-8 space-y-24">
+            <div>
+                <p class="text-xl md:text-3xl leading-relaxed font-light text-gray-300 reveal-opacity backdrop-blur-sm"
+                    data-cursor="text">
+                    我具備 <span class="text-white font-medium border-b border-[#caff33]">網頁開發</span> 與 <span
+                        class="text-white font-medium border-b border-[#caff33]">AI 應用</span> 的實務經驗。近期深入鑽研 LLM 與 RAG
+                    技術，致力於開發能解決實際問題的 AI 互動應用。
+                </p>
+            </div>
+            <div>
+                <h3 class="text-sm font-mono text-gray-500 mb-8 uppercase tracking-widest">Experience</h3>
+
+                <div class="group border-t border-gray-800 py-8 hover:bg-white/5 transition-colors interactive resume-item relative"
+                    data-cursor="magnet">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-r from-[#caff33]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                    </div>
+                    <div class="flex justify-between items-baseline flex-wrap gap-2 relative z-10">
+                        <h4 class="text-2xl font-bold">AI & Full Stack</h4>
+                        <span class="text-gray-500 font-mono">2024.10 — 2024.12</span>
+                    </div>
+                    <p class="mt-2 text-[#caff33] relative z-10">中教大 吳育龍老師</p>
+                    <p class="mt-4 text-gray-400 max-w-xl relative z-10">開發「CoGPT」─ 支援合作學習的AI學伴系統，整合 RAG 技術、FastAPI，製作可設定課程分組討論的互動式學習平台。</p>
+                </div>
+
+                <div class="group border-t border-gray-800 py-8 hover:bg-white/5 transition-colors interactive resume-item relative"
+                    data-cursor="magnet">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-r from-[#caff33]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                    </div>
+                    <div class="flex justify-between items-baseline flex-wrap gap-2 relative z-10">
+                        <h4 class="text-2xl font-bold">AI & Backend Dev</h4>
+                        <span class="text-gray-500 font-mono">2023 — 2024</span>
+                    </div>
+                    <p class="mt-2 text-[#caff33] relative z-10">中教大 113 級數位系畢籌會</p>
+                    <p class="mt-4 text-gray-400 max-w-xl relative z-10">開發「AI 導覽員-璃兒」，整合 RAG 技術、FastAPI 與 Unity
+                        Live2D，打造互動式導覽體驗。</p>
+                </div>
+
+                <div class="group border-t border-gray-800 py-8 hover:bg-white/5 transition-colors interactive resume-item relative"
+                    data-cursor="magnet">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-r from-[#caff33]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                    </div>
+                    <div class="flex justify-between items-baseline flex-wrap gap-2 relative z-10">
+                        <h4 class="text-2xl font-bold">Full Stack Intern</h4>
+                        <span class="text-gray-500 font-mono">2023.07 — 2023.08</span>
+                    </div>
+                    <p class="mt-2 text-[#caff33] relative z-10">阿虎巴巴聯合企業</p>
+                    <p class="mt-4 text-gray-400 max-w-xl relative z-10">擴充 LineBot 功能，製作自動化發文程式，並策劃公司週年慶活動網頁。</p>
+                </div>
+
+                <div class="group border-t border-gray-800 py-8 hover:bg-white/5 transition-colors interactive resume-item relative"
+                    data-cursor="magnet">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-r from-[#caff33]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                    </div>
+                    <div class="flex justify-between items-baseline flex-wrap gap-2 relative z-10">
+                        <h4 class="text-2xl font-bold">Backend Engineer</h4>
+                        <span class="text-gray-500 font-mono">2022.05 — 2022.12</span>
+                    </div>
+                    <p class="mt-2 text-[#caff33] relative z-10">原民會產學合作案</p>
+                    <p class="mt-4 text-gray-400 max-w-xl relative z-10">開發「原流購物網站」後端，實作票券、客服系統，並串接綠界與 Line Pay 金流。</p>
+                </div>
+            </div>
+            <div>
+                <h3 class="text-sm font-mono text-gray-500 mb-8 uppercase tracking-widest">Stack</h3>
+                <div class="flex flex-wrap gap-3">
+                    <span
+                        class="px-4 py-2 border border-gray-700 rounded-full text-sm hover:bg-[#caff33] hover:text-black hover:border-[#caff33] transition-colors cursor-default bg-[#0a0a0a]">Python</span>
+                    <span
+                        class="px-4 py-2 border border-gray-700 rounded-full text-sm hover:bg-[#caff33] hover:text-black hover:border-[#caff33] transition-colors cursor-default bg-[#0a0a0a]">FastAPI</span>
+                    <span
+                        class="px-4 py-2 border border-gray-700 rounded-full text-sm hover:bg-[#caff33] hover:text-black hover:border-[#caff33] transition-colors cursor-default bg-[#0a0a0a]">Vue.js</span>
+                    <span
+                        class="px-4 py-2 border border-gray-700 rounded-full text-sm hover:bg-[#caff33] hover:text-black hover:border-[#caff33] transition-colors cursor-default bg-[#0a0a0a]">LangChain</span>
+                    <span
+                        class="px-4 py-2 border border-gray-700 rounded-full text-sm hover:bg-[#caff33] hover:text-black hover:border-[#caff33] transition-colors cursor-default bg-[#0a0a0a]">MySQL</span>
+                    <span
+                        class="px-4 py-2 border border-gray-700 rounded-full text-sm hover:bg-[#caff33] hover:text-black hover:border-[#caff33] transition-colors cursor-default bg-[#0a0a0a]">Docker</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 橫向滾動作品集 Section -->
+<section id="works" class="horizontal-scroll-wrapper bg-[#e0e0e0] text-black relative">
+    <div
+        class="absolute top-10 left-10 text-[10vw] font-black text-gray-300 opacity-30 pointer-events-none leading-none">
+        SELECTED<br>WORKS
+    </div>
+
+    <div class="horizontal-content">
+        <div class="flex-shrink-0 w-[30vw] md:w-[25vw] flex flex-col justify-center px-10">
+            <h2 class="text-5xl md:text-7xl font-black tracking-tighter mb-6">2026<br>Show<br>Case</h2>
+            <div class="w-20 h-2 bg-black"></div>
+            <p class="mt-6 font-mono text-sm">SCROLL TO EXPLORE →</p>
+        </div>
+
+        {{ $projects := where .Site.RegularPages "Section" "projects" }}
+        {{ range $index, $element := first 5 $projects }}
+        <div class="flex-shrink-0 w-[80vw] md:w-[45vw] group interactive relative" data-cursor="view">
+            <a href="{{ .Permalink }}" class="block">
+                <div class="aspect-[16/9] bg-black overflow-hidden relative">
+                    <div class="absolute inset-0 bg-[#1a1a1a] group-hover:scale-105 transition-transform duration-700">
+                        {{ if .Params.image }}
+                        {{ $projectImage := .Resources.GetMatch .Params.image }}
+                        <img src="{{ if $projectImage }}{{ $projectImage.RelPermalink }}{{ else }}{{ .Params.image }}{{ end }}" alt="{{ .Title }}"
+                            class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                        {{ else }}
+                        <div class="w-full h-full flex items-center justify-center text-gray-500">No Image</div>
+                        {{ end }}
+                    </div>
+                    <div class="absolute bottom-0 left-0 p-6 text-white z-10">
+                        <span class="font-mono text-xs px-2 py-1"
+                            style="background-color: {{ .Params.tag_bg_color | default " #caff33" }}; color: {{
+                            .Params.tag_text_color | default "#000000" }};">
+                            {{ .Params.type | default "PROJECT" }}
+                        </span>
+                    </div>
+                </div>
+                <div class="mt-6 border-t border-black pt-4 flex justify-between items-start">
+                    <div>
+                        <h3 class="text-3xl font-bold">{{ .Title }}</h3>
+                        <p class="text-gray-600 mt-1">{{ .Description | truncate 50 }}</p>
+                    </div>
+                    <span class="text-4xl font-light">{{ printf "%02d" (add $index 1) }}</span>
+                </div>
+            </a>
+        </div>
+        {{ end }}
+
+        <div class="flex-shrink-0 w-[30vw] flex flex-col justify-center items-center px-10">
+            <a href="{{ .Site.BaseURL }}projects/"
+                class="w-40 h-40 rounded-full border-2 border-black flex items-center justify-center hover:bg-black hover:text-[#caff33] transition-colors duration-300 interactive text-xl font-bold"
+                data-cursor="magnet">
+                ALL<br>WORKS
+            </a>
+        </div>
+
+    </div>
+</section>
+{{ end }}
+
+{{ define "scripts" }}
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // --- 2. Hero 進場動畫 ---
+        const tl = gsap.timeline();
+
+        // 設定卡片初始狀態
+        gsap.set('.tech-card', { autoAlpha: 0, y: -20, rotateX: 5, rotateY: -15 });
+
+        tl.to('.reveal-text', {
+            y: '0%',
+            duration: 1.5,
+            stagger: 0.15,
+            ease: "power2.out"
+        })
+            .to('.tech-card', {
+                autoAlpha: 1,
+                y: '-50%',
+                duration: 1.2,
+                ease: "power3.out"
+            }, "-=1.0")
+            .from('.reveal-fade', {
+                opacity: 0,
+                y: 20,
+                duration: 1,
+                stagger: 0.2
+            }, "-=1.2")
+            .from('.bg-grid', {
+                opacity: 0,
+                duration: 1.5
+            }, "-=1");
+
+        // --- 3. 履歷區塊動畫 ---
+        gsap.utils.toArray('.resume-item').forEach(item => {
+            gsap.from(item, {
+                scrollTrigger: {
+                    trigger: item,
+                    start: "top 90%",
+                },
+                opacity: 0,
+                y: 30,
+                duration: 0.8,
+                ease: "power2.out"
+            });
+        });
+
+        // --- 4. 橫向滾動 ---
+        const scrollWrapper = document.querySelector(".horizontal-scroll-wrapper");
+        const scrollContent = document.querySelector(".horizontal-content");
+
+        if (scrollWrapper && scrollContent) {
+            let scrollWidth = scrollContent.scrollWidth - window.innerWidth;
+
+            gsap.to(scrollContent, {
+                x: () => -scrollWidth,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: scrollWrapper,
+                    pin: true,
+                    scrub: 1,
+                    end: () => "+=" + scrollWidth,
+                    invalidateOnRefresh: true,
+                    id: "horizontalTween"
+                }
+            });
+        }
+    });
+</script>
+{{ end }}

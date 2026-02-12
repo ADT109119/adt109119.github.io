@@ -1,0 +1,400 @@
+{{ define "main" }}
+<div class="pt-32 pb-20 px-6 md:px-20 min-h-screen bg-[#0a0a0a] relative z-10 overflow-hidden">
+    <!-- Background Elements -->
+    <div class="bg-grid fixed inset-0 z-0"></div>
+    <div class="blob-gradient w-96 h-96 bg-blue-900 top-20 right-[-100px] mix-blend-screen fixed"></div>
+
+    <!-- Decorative Shapes -->
+    <div class="parallax-shape top-40 left-10 w-4 h-4 bg-[#caff33]" data-speed="1"></div>
+    <div class="parallax-shape bottom-20 right-20 w-20 h-[1px] bg-gray-700 rotate-45" data-speed="2"></div>
+
+    <article class="max-w-6xl mx-auto relative z-10">
+        <!-- Header -->
+        <a href="{{ .Site.BaseURL }}projects/"
+            class="interactive text-gray-400 hover:text-white transition-colors flex items-center gap-2 group"
+            data-cursor="magnet">
+            <span class="group-hover:-translate-x-1 transition-transform">←</span> BACK TO ALL WORKS
+        </a>
+
+        <header class="mt-10 mb-16 text-center">
+            <div
+                class="inline-block mb-4 px-3 py-1 border border-[#caff33] text-[#caff33] text-xs font-mono uppercase tracking-widest rounded-full reveal-fade opacity-0">
+                {{ .Params.type | default "PROJECT" }}
+            </div>
+            <h1 class="text-4xl md:text-6xl font-black tracking-tighter mb-6 leading-tight overflow-hidden">
+                <span class="reveal-text inline-block transform translate-y-full">
+                    {{ .Title }}
+                </span>
+            </h1>
+            {{ if .Params.description }}
+            <p class="text-xl text-gray-400 max-w-3xl mx-auto mb-8 reveal-fade opacity-0 font-light leading-relaxed">
+                {{ .Params.description }}
+            </p>
+            {{ end }}
+            <div class="flex justify-center items-center gap-6 text-gray-400 font-mono text-sm reveal-fade opacity-0">
+                <span>{{ .Date.Format "2006.01.02" }}</span>
+                {{ if .Params.role }}<span>// {{ .Params.role }}</span>{{ end }}
+            </div>
+        </header>
+
+        <!-- Featured Image -->
+        {{ if .Params.image }}
+        {{ $featuredImage := .Resources.GetMatch .Params.image }}
+        <div
+            class="mb-16 rounded-lg overflow-hidden border border-gray-800 reveal-scale opacity-0 scale-95 aspect-video relative group">
+            <img src="{{ if $featuredImage }}{{ $featuredImage.RelPermalink }}{{ else }}{{ .Params.image }}{{ end }}" alt="{{ .Title }}" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-60"></div>
+            <div class="absolute bottom-6 left-6 md:bottom-10 md:left-10">
+                <div class="flex flex-wrap gap-4">
+                    {{ if .Params.video_link }}
+                    <a href="{{ .Params.video_link }}" target="_blank"
+                        class="bg-[#caff33] text-black px-6 py-2 font-bold text-sm hover:bg-white transition-colors interactive flex items-center gap-2"
+                        data-cursor="magnet">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        觀看 Demo 影片
+                    </a>
+                    {{ end }}
+                    {{ if .Params.live_link }}
+                    <a href="{{ .Params.live_link }}" target="_blank"
+                        class="border border-white text-white px-6 py-2 font-bold text-sm hover:bg-white hover:text-black transition-colors interactive flex items-center gap-2"
+                        data-cursor="magnet">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                        前往網站
+                    </a>
+                    {{ end }}
+                    {{ if .Params.website_link }}
+                    <a href="{{ .Params.website_link }}" target="_blank"
+                        class="border border-white text-white px-6 py-2 font-bold text-sm hover:bg-white hover:text-black transition-colors interactive flex items-center gap-2"
+                        data-cursor="magnet">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                        前往網站
+                    </a>
+                    {{ end }}
+                    {{ if .Params.code_link }}
+                    <a href="{{ .Params.code_link }}" target="_blank"
+                        class="border border-white text-white px-6 py-2 font-bold text-sm hover:bg-white hover:text-black transition-colors interactive flex items-center gap-2"
+                        data-cursor="magnet">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                        </svg>
+                        查看相關程式碼
+                    </a>
+                    {{ end }}
+                </div>
+            </div>
+        </div>
+        {{ end }}
+
+        <div class="grid md:grid-cols-12 gap-12">
+            <!-- Sidebar: Tech Stack & Info -->
+            <div class="md:col-span-4 reveal-fade opacity-0">
+                <div class="sticky top-32 space-y-8">
+                    <!-- Project Info -->
+                    <div class="p-6 border border-gray-800 bg-[#1a1a1a]/50 backdrop-blur-sm rounded-lg">
+                        <h3 class="text-lg font-bold text-white mb-4 border-l-4 border-[#caff33] pl-3">專案資訊</h3>
+                        <div class="space-y-4 text-sm text-gray-400">
+                                <div>
+                                    <span class="block text-gray-500 mb-1">角色:</span>
+                                    <span class="text-white font-medium">{{ .Params.role }}</span>
+                                </div>
+                                {{ if .Params.client }}
+                                <div>
+                                    <span class="block text-gray-500 mb-1">委託單位:</span>
+                                    <span class="text-white font-medium">{{ .Params.client }}</span>
+                                </div>
+                                {{ end }}
+                                <div>
+                                    <span class="block text-gray-500 mb-1">時間:</span>
+                                    <span class="text-white font-medium">{{ .Params.time }}</span>
+                            </div>
+                            <div>
+                                <span class="block text-gray-500 mb-1">類型:</span>
+                                <span class="text-white font-medium">{{ .Params.type }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tech Stack -->
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-4 border-l-4 border-[#caff33] pl-3">技術棧</h3>
+                        <div class="flex flex-wrap gap-2">
+                            {{ range .Params.tags }}
+                            <span
+                                class="px-3 py-1 border border-gray-700 rounded-full text-xs hover:border-[#caff33] hover:text-[#caff33] transition-colors cursor-default bg-[#0a0a0a] text-gray-300">
+                                {{ . }}
+                            </span>
+                            {{ end }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="md:col-span-8">
+                <style>
+                    /* Project Content Custom Styling */
+                    .project-content {
+                        color: #e0e0e0;
+                        font-family: 'Noto Sans TC', sans-serif;
+                        line-height: 1.8;
+                        font-weight: 300;
+                    }
+
+                    /* Headings */
+                    .project-content h1,
+                    .project-content h2,
+                    .project-content h3,
+                    .project-content h4,
+                    .project-content h5,
+                    .project-content h6 {
+                        font-family: 'Space Grotesk', 'Noto Sans TC', sans-serif;
+                        color: white;
+                        font-weight: 700;
+                        margin-top: 3rem;
+                        margin-bottom: 1.5rem;
+                        letter-spacing: -0.02em;
+                        line-height: 1.2;
+                    }
+
+                    .project-content h1 {
+                        font-size: 2.5rem;
+                    }
+
+                    .project-content h2 {
+                        font-size: 2rem;
+                        border-left: 4px solid var(--c-accent);
+                        padding-left: 1rem;
+                    }
+
+                    .project-content h3 {
+                        font-size: 1.5rem;
+                        color: var(--c-accent);
+                    }
+
+                    /* Paragraphs */
+                    .project-content p {
+                        margin-bottom: 1.5rem;
+                        font-size: 1.125rem;
+                        /* 18px */
+                    }
+
+                    /* Lists */
+                    .project-content ul,
+                    .project-content ol {
+                        margin-bottom: 2rem;
+                        padding-left: 1.5rem;
+                    }
+
+                    .project-content li {
+                        margin-bottom: 0.5rem;
+                        position: relative;
+                        padding-left: 0.5rem;
+                    }
+
+                    .project-content ul li::marker {
+                        color: var(--c-accent);
+                    }
+
+                    .project-content ol li::marker {
+                        color: var(--c-accent);
+                        font-family: 'Space Grotesk', monospace;
+                        font-weight: bold;
+                    }
+
+                    /* Links */
+                    .project-content a {
+                        color: white;
+                        text-decoration: none;
+                        border-bottom: 1px solid var(--c-accent);
+                        transition: all 0.3s ease;
+                        padding-bottom: 2px;
+                    }
+
+                    .project-content a:hover {
+                        background-color: rgba(202, 255, 51, 0.1);
+                        color: var(--c-accent);
+                    }
+
+                    /* Blockquotes */
+                    .project-content blockquote {
+                        border-left: 4px solid var(--c-accent);
+                        background: rgba(255, 255, 255, 0.03);
+                        padding: 1.5rem 2rem;
+                        margin: 2rem 0;
+                        font-style: italic;
+                        color: #ccc;
+                        border-radius: 0 8px 8px 0;
+                    }
+
+                    /* Code Blocks */
+                    .project-content pre {
+                        background: #1a1a1a !important;
+                        border: 1px solid #333;
+                        border-radius: 8px;
+                        padding: 1.5rem;
+                        overflow-x: auto;
+                        margin: 2rem 0;
+                    }
+
+                    .project-content code {
+                        font-family: 'JetBrains Mono', monospace;
+                        color: var(--c-accent);
+                        background: rgba(255, 255, 255, 0.1);
+                        padding: 0.2em 0.4em;
+                        border-radius: 4px;
+                        font-size: 0.9em;
+                    }
+
+                    .project-content pre code {
+                        background: transparent;
+                        padding: 0;
+                        color: #e0e0e0;
+                    }
+
+                    /* Images */
+                    .project-content img,
+                    .project-content video {
+                        border-radius: 8px;
+                        border: 1px solid #333;
+                        margin: 2rem 0;
+                        max-width: 100%;
+                        width: auto;
+                        height: auto;
+                        display: block;
+                    }
+
+                    /* Strong/Bold */
+                    .project-content strong {
+                        color: white;
+                        font-weight: 700;
+                    }
+
+                    /* Horizontal Rule */
+                    .project-content hr {
+                        border: 0;
+                        border-top: 1px solid #333;
+                        margin: 3rem 0;
+                    }
+                </style>
+                <div class="project-content reveal-fade opacity-0">
+                    {{ .Content }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Gallery Section -->
+        {{ if .Params.gallery }}
+        <div class="mt-32 reveal-fade opacity-0">
+            <h2 class="text-3xl font-bold mb-10 flex items-center gap-4">
+                <span class="w-8 h-[2px] bg-[#caff33]"></span>
+                專案藝廊
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {{ range .Params.gallery }}
+                {{ $galleryImage := $.Resources.GetMatch . }}
+                <div class="aspect-video bg-[#1a1a1a] rounded-lg overflow-hidden border border-gray-800 group interactive relative cursor-pointer gallery-item"
+                    data-cursor="view">
+                    <img src="{{ if $galleryImage }}{{ $galleryImage.RelPermalink }}{{ else }}{{ . }}{{ end }}" alt="Gallery Image"
+                        class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                </div>
+                {{ end }}
+            </div>
+        </div>
+        {{ end }}
+
+        <!-- Navigation -->
+        <div class="mt-20 pt-10 border-t border-gray-800 flex justify-between items-center reveal-fade opacity-0">
+            <a href="{{ .Site.BaseURL }}projects/"
+                class="interactive text-gray-400 hover:text-white transition-colors flex items-center gap-2 group"
+                data-cursor="magnet">
+                <span class="group-hover:-translate-x-1 transition-transform">←</span> BACK TO ALL WORKS
+            </a>
+        </div>
+    </article>
+
+</div>
+
+<!-- Lightbox moved outside of relative/overflow-hidden container -->
+<div id="lightbox"
+    class="fixed inset-0 z-[8888] bg-black/90 backdrop-blur-md hidden flex items-center justify-center opacity-0 transition-opacity duration-300">
+    <div class="absolute top-10 right-10 cursor-pointer interactive text-white hover:text-[#caff33]"
+        id="lightbox-close" data-cursor="magnet">CLOSE [ESC]</div>
+    <img src="" alt="Lightbox" class="max-w-[90vw] max-h-[90vh] object-contain rounded-lg shadow-2xl">
+</div>
+{{ end }}
+
+{{ define "scripts" }}
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Animations
+        const tl = gsap.timeline();
+
+        tl.to('.reveal-text', {
+            y: '0%',
+            duration: 1.2,
+            ease: "power3.out"
+        })
+            .to('.reveal-fade', {
+                opacity: 1,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: "power2.out"
+            }, "-=0.8")
+            .to('.reveal-scale', {
+                opacity: 1,
+                scale: 1,
+                duration: 1,
+                ease: "power3.out"
+            }, "-=1.0");
+
+        // Lightbox Logic
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = lightbox.querySelector('img');
+        const lightboxClose = document.getElementById('lightbox-close');
+
+        galleryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const imgSrc = item.querySelector('img').src;
+                lightboxImg.src = imgSrc;
+                lightbox.classList.remove('hidden');
+                // Small delay to allow display:block to apply before opacity transition
+                setTimeout(() => {
+                    lightbox.classList.remove('opacity-0');
+                }, 10);
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        function closeLightbox() {
+            lightbox.classList.add('opacity-0');
+            setTimeout(() => {
+                lightbox.classList.add('hidden');
+                document.body.style.overflow = '';
+            }, 300);
+        }
+
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+        });
+    });
+</script>
+{{ end }}

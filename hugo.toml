@@ -1,0 +1,27 @@
+baseURL = 'https://example.org/'
+languageCode = 'zh-tw'
+title = 'JerryYen - 個人網站'
+
+[params]
+author = "JerryYen"
+github = "ADT109119"
+youtube = "@the_walking_fish"
+youtubeName = "The walking fish 步行魚"
+blog = "https://the-walking-fish.com/"
+email = "me@the-walking-fish.com"
+
+[[params.social]]
+  name = "GITHUB"
+  url = "https://github.com/ADT109119"
+
+[[params.social]]
+  name = "YOUTUBE"
+  url = "https://youtube.com/@the_walking_fish"
+
+[[params.social]]
+  name = "X(TWITTER)"
+  url = "https://x.com/FishThe77899"
+
+[[params.social]]
+  name = "BLOG"
+  url = "https://the-walking-fish.com/"

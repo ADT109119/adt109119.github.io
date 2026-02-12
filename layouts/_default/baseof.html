@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="antialiased">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --c-bg: #0a0a0a;
+            --c-text: #e0e0e0;
+            --c-accent: #caff33;
+            /* Acid Lime */
+            --c-secondary: #7000ff;
+            /* Electric Purple */
+            --cursor-size: 20px;
+        }
+
+        body {
+            background-color: var(--c-bg);
+            color: var(--c-text);
+            font-family: 'Space Grotesk', 'Noto Sans TC', sans-serif;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* 噪點紋理 */
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* 背景網格 */
+        .bg-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: 60px 60px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* --- 游標系統 --- */
+        .cursor-dot,
+        .cursor-outline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .cursor-dot {
+            width: var(--cursor-size);
+            height: var(--cursor-size);
+            background-color: var(--c-accent);
+            mix-blend-mode: difference;
+            transition: width 0.3s, height 0.3s, opacity 0.3s;
+        }
+
+        .cursor-outline {
+            width: 60px;
+            height: 60px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s, transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        body.hovering .cursor-outline {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(202, 255, 51, 0.05);
+            border-color: var(--c-accent);
+            backdrop-filter: blur(2px);
+        }
+
+        body.cursor-magnet .cursor-outline {
+            width: 50px;
+            height: 50px;
+            background-color: var(--c-accent);
+            border-color: transparent;
+            mix-blend-mode: difference;
+        }
+
+        body.cursor-magnet .cursor-dot {
+            opacity: 0;
+        }
+
+        body.cursor-text .cursor-outline {
+            width: 4px;
+            height: 40px;
+            border-radius: 2px;
+            background-color: var(--c-accent);
+            border: none;
+        }
+
+        body.cursor-text .cursor-dot {
+            opacity: 0;
+        }
+
+        body.cursor-view .cursor-outline {
+            width: 100px;
+            height: 100px;
+            background-color: #caff33;
+            border-color: transparent;
+            mix-blend-mode: normal;
+        }
+
+        body.cursor-view .cursor-outline::after {
+            content: 'VIEW';
+            color: black;
+            font-weight: 800;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        body.cursor-view .cursor-dot {
+            opacity: 0;
+        }
+
+        /* 浮動幾何形狀 */
+        .parallax-shape {
+            position: absolute;
+            pointer-events: none;
+            z-index: 5;
+            opacity: 0.6;
+        }
+
+        .blob-gradient {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 0;
+            opacity: 0.4;
+            animation: floatBlob 10s infinite alternate ease-in-out;
+        }
+
+        @keyframes floatBlob {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            100% {
+                transform: translate(30px, -30px) scale(1.1);
+            }
+        }
+
+        /* --- 修正後的科技感卡片 --- */
+        .tech-card {
+            position: absolute;
+            right: 10%;
+            top: 60%;
+            transform: translateY(-50%) perspective(1000px) rotateY(-15deg) rotateX(5deg);
+            width: 340px;
+            background: rgba(20, 20, 20, 0.8);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-left: 3px solid var(--c-accent);
+            padding: 30px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            z-index: 20;
+            opacity: 0;
+            visibility: hidden;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .tech-card:hover {
+            transform: translateY(-50%) perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1.02);
+            background: rgba(30, 30, 30, 0.95);
+            border-color: rgba(202, 255, 51, 0.6);
+            box-shadow: 0 0 40px rgba(202, 255, 51, 0.15);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--c-accent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--c-accent);
+            display: inline-block;
+            margin-right: 10px;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0% {
+                opacity: 1;
+                box-shadow: 0 0 0 0px rgba(202, 255, 51, 0.7);
+            }
+
+            70% {
+                opacity: 1;
+                box-shadow: 0 0 0 6px rgba(202, 255, 51, 0);
+            }
+
+            100% {
+                opacity: 1;
+                box-shadow: 0 0 0 0px rgba(202, 255, 51, 0);
+            }
+        }
+
+        /* --- DEVELOPER 文字填滿特效 --- */
+        .text-fill-anim {
+            display: inline-block;
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
+            color: transparent;
+            background-image: linear-gradient(to top, var(--c-accent) 50%, transparent 50%);
+            background-size: 100% 200%;
+            background-position: 0% 0%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            transition: background-position 0.5s ease, -webkit-text-stroke 0.3s;
+            cursor: pointer;
+        }
+
+        .text-fill-anim:hover {
+            background-position: 0% 100%;
+            -webkit-text-stroke: 1px transparent;
+        }
+
+        /* 橫向滾動容器 */
+        .horizontal-scroll-wrapper {
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .horizontal-content {
+            display: flex;
+            flex-wrap: nowrap;
+            width: fit-content;
+            height: 100vh;
+            align-items: center;
+            padding: 0 10vw;
+            gap: 10vw;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--c-accent);
+        }
+
+        /* --- 無縫滾動跑馬燈 (Seamless Marquee) --- */
+        .marquee-track {
+            display: flex;
+            width: max-content;
+            /* 讓容器寬度根據內容自動延伸 */
+        }
+
+        .marquee-item {
+            flex-shrink: 0;
+            padding-right: 4rem;
+            /* 將間距做在 Item 內，確保 translate 包含此距離 */
+            animation: marquee 25s linear infinite;
+            will-change: transform;
+            /* 效能優化 */
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+    </style>
+    {{ block "head" . }}{{ end }}
+</head>
+
+<body>
+
+    <div class="noise-overlay"></div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- 導航 -->
+    <nav
+        class="fixed top-0 left-0 w-full p-6 md:p-10 flex justify-between items-start z-50 mix-blend-difference text-white pointer-events-none">
+        <a href="{{ .Site.BaseURL }}" class="interactive pointer-events-auto text-xl font-bold tracking-tighter"
+            data-cursor="magnet">JERRY.<br><span class="text-xs font-normal text-gray-400">PORTFOLIO '26</span></a>
+        <div class="hidden md:flex flex-col items-end gap-1 pointer-events-auto">
+            <a href="{{ .Site.BaseURL }}#about"
+                class="interactive text-xs uppercase tracking-widest hover:text-[#caff33] transition-colors"
+                data-cursor="magnet">Profile</a>
+            <a href="{{ .Site.BaseURL }}projects/"
+                class="interactive text-xs uppercase tracking-widest hover:text-[#caff33] transition-colors"
+                data-cursor="magnet">All Works</a>
+            <a href="#contact"
+                class="interactive text-xs uppercase tracking-widest hover:text-[#caff33] transition-colors"
+                data-cursor="magnet">Contact</a>
+        </div>
+        <button class="interactive pointer-events-auto md:hidden text-white" data-cursor="magnet">MENU</button>
+    </nav>
+
+    {{ block "main" . }}{{ end }}
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-[#050505] py-32 px-6 md:px-20 relative overflow-hidden text-white">
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <p class="text-[#caff33] font-mono mb-6">WANT TO COLLABORATE?</p>
+            <a href="mailto:{{ .Site.Params.email }}"
+                class="interactive block text-[8vw] md:text-[6vw] leading-none font-black hover:text-stroke transition-all duration-300 uppercase"
+                data-cursor="magnet">
+                {{ .Site.Params.email }}
+            </a>
+            <div class="mt-16 flex justify-center gap-10 text-gray-400 font-mono text-sm">
+                {{ range .Site.Params.social }}
+                <a href="{{ .url }}" target="_blank"
+                    class="hover:text-white transition-colors interactive" data-cursor="magnet">{{ .name }}</a>
+                {{ end }}
+            </div>
+            <p class="mt-32 text-xs text-gray-600">© {{ now.Format "2006" }} {{ .Site.Params.author }}. All Rights
+                Reserved.</p>
+        </div>
+        <div class="bg-grid opacity-30"></div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // --- 1. 游標邏輯 ---
+            const cursorDot = document.querySelector('.cursor-dot');
+            const cursorOutline = document.querySelector('.cursor-outline');
+            const interactiveElements = document.querySelectorAll('.interactive');
+
+            let mouseX = 0, mouseY = 0;
+            let cursorX = 0, cursorY = 0;
+
+            const parallaxShapes = document.querySelectorAll('.parallax-shape');
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                cursorDot.style.top = mouseY + 'px';
+                cursorDot.style.left = mouseX + 'px';
+
+                // 視差效果
+                const xRatio = (mouseX / window.innerWidth - 0.5) * 2;
+                const yRatio = (mouseY / window.innerHeight - 0.5) * 2;
+                parallaxShapes.forEach(shape => {
+                    const speed = shape.getAttribute('data-speed');
+                    gsap.to(shape, {
+                        x: xRatio * 20 * speed,
+                        y: yRatio * 20 * speed,
+                        duration: 1,
+                        ease: "power2.out"
+                    });
+                });
+            });
+
+            gsap.ticker.add(() => {
+                const dt = 1.0 - Math.pow(1.0 - 0.15, gsap.ticker.deltaRatio());
+                cursorX += (mouseX - cursorX) * dt;
+                cursorY += (mouseY - cursorY) * dt;
+                cursorOutline.style.top = cursorY + 'px';
+                cursorOutline.style.left = cursorX + 'px';
+            });
+
+            // Re-attach listeners for dynamic content
+            function attachCursorListeners() {
+                const newInteractiveElements = document.querySelectorAll('.interactive');
+                newInteractiveElements.forEach(el => {
+                    el.removeEventListener('mouseenter', cursorEnter);
+                    el.removeEventListener('mouseleave', cursorLeave);
+                    el.addEventListener('mouseenter', cursorEnter);
+                    el.addEventListener('mouseleave', cursorLeave);
+                });
+            }
+
+            function cursorEnter(e) {
+                const el = e.currentTarget;
+                document.body.classList.add('hovering');
+
+                const cursorType = el.getAttribute('data-cursor');
+                if (cursorType === 'magnet') {
+                    document.body.classList.add('cursor-magnet');
+                } else if (cursorType === 'text') {
+                    document.body.classList.add('cursor-text');
+                } else if (cursorType === 'view') {
+                    document.body.classList.add('cursor-view');
+                }
+            }
+
+            function cursorLeave() {
+                document.body.classList.remove('hovering');
+                document.body.classList.remove('cursor-magnet');
+                document.body.classList.remove('cursor-text');
+                document.body.classList.remove('cursor-view');
+            }
+
+            attachCursorListeners();
+
+            // Expose for other scripts
+            window.attachCursorListeners = attachCursorListeners;
+
+            // 時鐘更新
+            setInterval(() => {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('en-US', { hour12: false });
+                const clockEl = document.getElementById('clock');
+                if (clockEl) clockEl.innerText = timeString;
+            }, 1000);
+        });
+    </script>
+    {{ block "scripts" . }}{{ end }}
+</body>
+
+</html>

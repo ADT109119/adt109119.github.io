@@ -1,0 +1,14 @@
+{{ $is_video := false }}
+{{ $ext := path.Ext .Destination | lower }}
+{{ if or (eq $ext ".mp4") (eq $ext ".webm") (eq $ext ".mov") }}
+  {{ $is_video = true }}
+{{ end }}
+
+{{ if $is_video }}
+<video controls title="{{ .Text }}" class="project-video">
+  <source src="{{ .Destination | safeURL }}">
+  Your browser does not support the video tag.
+</video>
+{{ else }}
+<img src="{{ .Destination | safeURL }}" alt="{{ .Text }}" {{ with .Title }} title="{{ . }}" {{ end }} />
+{{ end }}
