@@ -335,8 +335,18 @@
                 class="interactive text-xs uppercase tracking-widest hover:text-[#caff33] transition-colors"
                 data-cursor="magnet">Contact</a>
         </div>
-        <button class="interactive pointer-events-auto md:hidden text-white" data-cursor="magnet">MENU</button>
+        <button id="mobile-menu-btn" class="interactive pointer-events-auto md:hidden text-white font-bold tracking-widest text-sm" data-cursor="magnet">MENU</button>
     </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-[#0a0a0a] z-[60] flex flex-col justify-center items-center opacity-0 pointer-events-none transition-opacity duration-500">
+        <button id="mobile-menu-close" class="absolute top-6 right-6 text-white text-sm font-bold tracking-widest interactive" data-cursor="magnet">CLOSE</button>
+        <div class="flex flex-col gap-8 text-center">
+            <a href="{{ .Site.BaseURL }}#about" class="mobile-menu-link text-4xl font-bold text-white hover:text-[#caff33] transition-colors interactive" data-cursor="magnet">PROFILE</a>
+            <a href="{{ .Site.BaseURL }}projects/" class="mobile-menu-link text-4xl font-bold text-white hover:text-[#caff33] transition-colors interactive" data-cursor="magnet">ALL WORKS</a>
+            <a href="#contact" class="mobile-menu-link text-4xl font-bold text-white hover:text-[#caff33] transition-colors interactive" data-cursor="magnet">CONTACT</a>
+        </div>
+    </div>
 
     {{ block "main" . }}{{ end }}
 
@@ -440,7 +450,37 @@
             // Expose for other scripts
             window.attachCursorListeners = attachCursorListeners;
 
-            // 時鐘更新
+            // --- Mobile Menu Logic ---
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenuClose = document.getElementById('mobile-menu-close');
+            const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+            const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
+
+            function toggleMobileMenu() {
+                if (!mobileMenuOverlay) return;
+                
+                const isOpen = mobileMenuOverlay.classList.contains('opacity-100');
+                if (isOpen) {
+                    mobileMenuOverlay.classList.remove('opacity-100', 'pointer-events-auto');
+                    mobileMenuOverlay.classList.add('opacity-0', 'pointer-events-none');
+                    document.body.style.overflow = ''; // Restore scrolling
+                } else {
+                    mobileMenuOverlay.classList.remove('opacity-0', 'pointer-events-none');
+                    mobileMenuOverlay.classList.add('opacity-100', 'pointer-events-auto');
+                    document.body.style.overflow = 'hidden'; // Prevent scrolling
+                    // Re-attach cursor listeners for new elements inside the overlay if any
+                    attachCursorListeners();
+                }
+            }
+
+            if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+            if (mobileMenuClose) mobileMenuClose.addEventListener('click', toggleMobileMenu);
+            
+            mobileMenuLinks.forEach(link => {
+                link.addEventListener('click', toggleMobileMenu);
+            });
+
+            // 时钟更新
             setInterval(() => {
                 const now = new Date();
                 const timeString = now.toLocaleTimeString('en-US', { hour12: false });
