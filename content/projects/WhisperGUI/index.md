@@ -8,6 +8,8 @@ tags:
 - Python
 - Tkinter
 - Side Project
+- Whisper
+- ttkbootstrap
 role: 個人專案
 time: 2023.1.27
 type: Side Project

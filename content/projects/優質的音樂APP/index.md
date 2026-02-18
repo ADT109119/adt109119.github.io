@@ -12,6 +12,7 @@ tags:
 - JavaScript
 - Bootstrap
 - PWA
+- Flask
 - 課程專題
 role: 前端切版、前端程式開發、後端程式開發、資料庫結構設計
 time: 2022.12.19 ~ 2022.12.26

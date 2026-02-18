@@ -11,6 +11,8 @@ tags:
 - LangChain
 - RAG
 - AI
+- Live2D
+- VITS
 role: AI 程式、後端開發、前端開發、Unity 互動介面製作
 time: 2024.04 - 2024.05
 type: 畢業製作專案

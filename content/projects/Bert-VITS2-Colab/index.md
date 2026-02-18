@@ -8,6 +8,9 @@ tags:
 - Python
 - Jupyter Notebook
 - Side Project
+- Bert-VITS2
+- Whisper
+- HuggingFace
 role: 全部
 time: 2023.12.30 ~ 2023.12.31
 type: Side Project

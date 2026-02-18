@@ -7,6 +7,7 @@ image: LineBot.png
 tags:
 - Google App Script
 - Side Project
+- Line Bot
 role: ""
 time: 2019.July
 type: Side Project

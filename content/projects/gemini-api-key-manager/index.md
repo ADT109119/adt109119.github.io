@@ -8,8 +8,10 @@ tags:
 - Node.js
 - Docker
 - Load Balancing
-- Porxy
+- Proxy
 - Express
+- Google Gemini
+- OpenAI
 role: 全端開發
 type: Side Project
 tag_bg_color: "#ffffff"

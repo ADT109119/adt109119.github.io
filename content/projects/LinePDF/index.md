@@ -11,6 +11,7 @@ tags:
 - Vue.js
 - Python
 - AI
+- Line Bot
 role: 前後端製作
 type: 課程專題
 tag_bg_color: "#caff33"
